@@ -1,0 +1,154 @@
+.container-fluid {
+    position: fixed;
+    /*基準を画面の左上に*/
+    top: 0;
+    left: 0;
+    /*余白が入らないように*/
+    margin: 0;
+    width: 100%;
+	background-color:rgb(113,147,193);
+}
+.text-center {
+    /*以下装飾*/
+    width: 100%;
+    background: #FFC778;
+    color: white;
+}
+
+.talk {
+    width: 100vw;
+    height: 80vh;
+    overflow: auto;
+    background-color:rgb(113,147,193);
+}
+
+
+.input-row {
+    position: fixed;
+    /*基準を画面の左下に*/
+    bottom: 0;
+    left: 0;
+    /*余白が入らないように*/
+    margin: 0;
+    /*以下装飾*/
+    width: 100vw;
+    height: 5vh;
+    background: #FFC778;
+    color: white;
+}
+
+.form-control {
+    width: 75%;
+    height: 100%;
+    margin: 0;
+}
+
+.btn {
+    width: 20%;
+    height: 100%;
+    margin: 0;
+}
+
+
+/* 左のトークボックス */
+.talk .talk_left1{
+	clear: both;
+}
+
+.talk .talk_left1:before { /* 左の丸アイコン */
+	content:'';
+	display:inline-block;
+	width:50px;
+	height:50px;
+	vertical-align:top;
+	border-radius:50%;
+	background-size:cover;
+	/*background-image:url(icon_left.jpg); !* ←アイコンはここを変更 *!*/
+	background-color: blue;
+}
+
+.talk .talk_left1 p:before {  /* 左ふきだしの左三角を描画 */
+	content: '';
+	position:absolute;
+	top:8px;
+	left:-20px;
+	border: 12px solid transparent;
+	border-right:12px solid white;
+}
+.talk .talk_left1 p { /* 左ふきだしの本体 */
+	display:inline-block;
+	position:relative;
+	background-color:white;
+	border-radius:10px;
+	padding:10px;
+	margin:0 0 0 10px;
+}
+
+.talk .talk_left2{
+	clear: both;
+}
+
+.talk .talk_left2:before { /* 左の丸アイコン */
+	content:'';
+	display:inline-block;
+	width:50px;
+	height:50px;
+	vertical-align:top;
+	border-radius:50%;
+	background-size:cover;
+	/*background-image:url(icon_left.jpg); !* ←アイコンはここを変更 *!*/
+	background-color: red;
+}
+
+.talk .talk_left2 p:before {  /* 左ふきだしの左三角を描画 */
+	content: '';
+	position:absolute;
+	top:8px;
+	left:-20px;
+	border: 12px solid transparent;
+	border-right:12px solid white;
+}
+
+.talk .talk_left2 p { /* 左ふきだしの本体 */
+	display:inline-block;
+	position:relative;
+	background-color:white;
+	border-radius:10px;
+	padding:10px;
+	margin:0 0 0 10px;
+}
+
+/* 右のトークボックス */
+.talk .talk_right:after { /* 右の丸アイコン */
+	content:'';
+	display:inline-block;
+	width:50px;
+	height:50px;
+	vertical-align:top;
+	border-radius:50%;
+	background-size:cover;
+	background-position:-10px;
+	/*background-image:url(icon_right.jpg);  !* ←アイコンはここを変更 *!*/
+	background-color: gainsboro;
+}
+.talk .talk_right {
+	float:right; /* 右のふきだしは全体的に右寄せ */
+	margin-top:1em;
+	/*width: 100%;*/
+}
+.talk .talk_right p:after { /* 右ふきだしの右三角を描画 */
+	content: '';
+	position:absolute;
+	top:8px;
+	right:-20px;
+	border: 12px solid transparent;
+	border-left:12px solid #85e249;
+}
+.talk .talk_right p { /* 右ふきだしの本体 */
+	display:inline-block;
+	position:relative;
+	background-color:#85e249;
+	border-radius:10px;
+	padding:10px;
+	margin:0 10px 0 0;
+}
