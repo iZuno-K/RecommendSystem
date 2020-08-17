@@ -15,7 +15,7 @@
     color: white;
 }
 
-.talk {
+.talks {
     width: 100vw;
     height: 80vh;
     overflow: auto;
@@ -51,11 +51,11 @@
 
 
 /* 左のトークボックス */
-.talk .talk_left1{
+.talks .talk_left1{
 	clear: both;
 }
 
-.talk .talk_left1:before { /* 左の丸アイコン */
+.talks .talk_left1:before { /* 左の丸アイコン */
 	content:'';
 	display:inline-block;
 	width:50px;
@@ -67,7 +67,7 @@
 	background-color: blue;
 }
 
-.talk .talk_left1 p:before {  /* 左ふきだしの左三角を描画 */
+.talks .talk_left1 p:before {  /* 左ふきだしの左三角を描画 */
 	content: '';
 	position:absolute;
 	top:8px;
@@ -75,7 +75,7 @@
 	border: 12px solid transparent;
 	border-right:12px solid white;
 }
-.talk .talk_left1 p { /* 左ふきだしの本体 */
+.talks .talk_left1 p { /* 左ふきだしの本体 */
 	display:inline-block;
 	position:relative;
 	background-color:white;
@@ -84,11 +84,11 @@
 	margin:0 0 0 10px;
 }
 
-.talk .talk_left2{
+.talks .talk_left2{
 	clear: both;
 }
 
-.talk .talk_left2:before { /* 左の丸アイコン */
+.talks .talk_left2:before { /* 左の丸アイコン */
 	content:'';
 	display:inline-block;
 	width:50px;
@@ -100,7 +100,7 @@
 	background-color: red;
 }
 
-.talk .talk_left2 p:before {  /* 左ふきだしの左三角を描画 */
+.talks .talk_left2 p:before {  /* 左ふきだしの左三角を描画 */
 	content: '';
 	position:absolute;
 	top:8px;
@@ -109,7 +109,7 @@
 	border-right:12px solid white;
 }
 
-.talk .talk_left2 p { /* 左ふきだしの本体 */
+.talks .talk_left2 p { /* 左ふきだしの本体 */
 	display:inline-block;
 	position:relative;
 	background-color:white;
@@ -119,7 +119,7 @@
 }
 
 /* 右のトークボックス */
-.talk .talk_right:after { /* 右の丸アイコン */
+.talks .talk_right:after { /* 右の丸アイコン */
 	content:'';
 	display:inline-block;
 	width:50px;
@@ -131,12 +131,12 @@
 	/*background-image:url(icon_right.jpg);  !* ←アイコンはここを変更 *!*/
 	background-color: gainsboro;
 }
-.talk .talk_right {
+.talks .talk_right {
 	float:right; /* 右のふきだしは全体的に右寄せ */
 	margin-top:1em;
 	/*width: 100%;*/
 }
-.talk .talk_right p:after { /* 右ふきだしの右三角を描画 */
+.talks .talk_right p:after { /* 右ふきだしの右三角を描画 */
 	content: '';
 	position:absolute;
 	top:8px;
@@ -144,7 +144,7 @@
 	border: 12px solid transparent;
 	border-left:12px solid #85e249;
 }
-.talk .talk_right p { /* 右ふきだしの本体 */
+.talks .talk_right p { /* 右ふきだしの本体 */
 	display:inline-block;
 	position:relative;
 	background-color:#85e249;
