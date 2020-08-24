@@ -2,6 +2,7 @@ import random
 import re
 import pandas as pd
 import pathlib
+from np_detect import judge_np
 LUNCH_LIST = {}
 count = 0
 # TODO 複数人が接続しても大丈夫なようにする。 return_dictの中に入れて、web側で表示しないけど保持しておく？
@@ -51,8 +52,7 @@ def make_response_two_ai(json_dict):
             if cat in human_choice_category:
                 c = cat
                 break
-        # TODO positve negative detection
-        positive = False
+        positive = judge_np(latest_human_response)
         if positive:
             responses, _classes = response_when_accepted(json_dict, c)
         else:
@@ -79,8 +79,7 @@ def make_response_two_ai(json_dict):
             if cat in human_choice_category:
                 c = cat
                 break
-        # TODO positve negative detection
-        positive = True
+        positive = judge_np(latest_human_response)
         if positive:
             responses, _classes = response_when_accepted(json_dict, c)
         else:

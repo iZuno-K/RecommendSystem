@@ -13,6 +13,8 @@ http://www.lr.pi.titech.ac.jp/~takamura/pndic_ja.html
 
 import re
 import MeCab
+import pandas as pd
+import pathlib
 
 # 感情ファイルの辞書を作成する
 def read_pn_di():
@@ -28,6 +30,8 @@ def read_pn_di():
 
 
 def judge_np(src_txt):
+    LUNCH_LIST = pd.read_csv(pathlib.Path(__file__).parent.joinpath("data/lunch_list.csv"), encoding='shift-jis')['name'].tolist()
+
     # 単語感情極性対応表データを取得する
     dic_pn = read_pn_di()
 
@@ -54,16 +58,19 @@ def judge_np(src_txt):
 
         # tokens = t.tokenize(sentence)
         tokens = m.parse(sentence).split('\n')
+        print([t.split() for t in tokens])
         words = []
         for token in tokens:
             if len(token.split()) > 1:  # remove EOS
                 hinshi = token.split()[3].split('-')[0]
                 word = token.split()[0]
+                _l = [word in lunch for lunch in LUNCH_LIST]
+                if (hinshi == '名詞' and sum(_l) > 0):
+                    continue  # lunch listのlunchに文字列が含まれてたら計算から除外 ex.)カレー in チキンカレー はNP計算しない
                 if hinshi in ['動詞', '名詞', '形容詞', '副詞']:
                     # 感情分析(感情極性実数値より)
                     if (word in dic_pn):
                         data = token + ":" + str(dic_pn[word])
-                        print(data)
                         semantic_value = dic_pn[word] + semantic_value
                         semantic_count = semantic_count + 1
             words.append(token)
@@ -71,9 +78,10 @@ def judge_np(src_txt):
         if len(words) > 0:
             mixi_diary_words.extend(words)
 
-    data = "分析した単語数:" + str(semantic_count) + " 感情極性実数値合計:" + str(semantic_value) + " 感情極性実数値平均値:" + str(
-        semantic_value / semantic_count)
-    print(data)
+    # data = "分析した単語数:" + str(semantic_count) + " 感情極性実数値合計:" + str(semantic_value) + " 感情極性実数値平均値:" + str(
+    #     semantic_value / semantic_count)
+    # print(data)
+    return semantic_value > 0
 
 if __name__ == '__main__':
     judge_np('カレーは嫌だ')
