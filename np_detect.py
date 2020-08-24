@@ -58,7 +58,7 @@ def judge_np(src_txt):
 
         # tokens = t.tokenize(sentence)
         tokens = m.parse(sentence).split('\n')
-        print([t.split() for t in tokens])
+        # print([t.split() for t in tokens])
         words = []
         for token in tokens:
             if len(token.split()) > 1:  # remove EOS
@@ -84,4 +84,4 @@ def judge_np(src_txt):
     return semantic_value > 0
 
 if __name__ == '__main__':
-    judge_np('カレーは嫌だ')
+    judge = judge_np('パエリアいいね')

@@ -73,7 +73,7 @@ def make_response_two_ai(json_dict):
     if l == 11:
         categories = ["和食", "洋食", "中華"]
         human_choice_category = json_dict["#chat_{}".format(len(json_dict) - 9)]
-        latest_human_response = json_dict["#chat_{}".format(len(json_dict) - 4)]
+        latest_human_response = json_dict["#chat_{}".format(len(json_dict) - 1)]
         # カテゴリ判定
         for cat in categories:
             if cat in human_choice_category:

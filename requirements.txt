@@ -5,7 +5,7 @@ jaconv==0.2.4
 Janome==0.3.10
 Jinja2==2.11.2
 MarkupSafe==1.1.1
-mecab-python3==1.0.1
+mecab-python3==0.996.5
 numpy==1.19.1
 pandas==1.1.1
 python-dateutil==2.8.1
