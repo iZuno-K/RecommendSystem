@@ -1,8 +1,11 @@
 import random
 import re
+import pandas as pd
+import pathlib
 LUNCH_LIST = {}
 count = 0
-# TODO 複数人が接続しても大丈夫なようにする。
+# TODO 複数人が接続しても大丈夫なようにする。 return_dictの中に入れて、web側で表示しないけど保持しておく？
+# TODO ファイル読み込み LUNCHI_LIST
 
 def make_response_two_ai(json_dict):
     global count, LUNCH_LIST
@@ -13,10 +16,10 @@ def make_response_two_ai(json_dict):
     _classes = []
     if l == 1:
         # global 変数初期化
-        LUNCH_LIST = {"和食": ["唐揚げ", "おにぎり", "カレー", "焼肉", "そば"]}
-        count = 0
+        LUNCH_LIST = pd.read_csv(pathlib.Path(__file__).parent.joinpath("data/lunch_list.csv"), encoding='shift-jis')
+        # count = 0
 
-        responses = ["和食、洋食、中華どれがいい？"]
+        responses = ["和食、洋食、中華どれがいい？".format(count)]
         _classes = ['talk_left1']
     elif l == 3:
         categories = ["和食", "洋食", "中華"]
@@ -26,10 +29,11 @@ def make_response_two_ai(json_dict):
             if cat in human_choice_category:
                 c = cat
                 break
-        ai1_item = random.choice(LUNCH_LIST[c])
-        LUNCH_LIST[c].remove(ai1_item)
-        ai2_item = random.choice(LUNCH_LIST[c])
-        LUNCH_LIST[c].remove(ai2_item)
+
+        ai1_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
+        LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai1_item]  # remove ai1_item from subsequent candidates
+        ai2_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
+        LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai2_item]
 
         ai1_response1 = "{}にしたらどう？".format(ai1_item)
         ai2_response1 = "やっぱ{}でしょ！？".format(ai2_item)
@@ -56,10 +60,10 @@ def make_response_two_ai(json_dict):
             prev_ai1_item = json_dict["#chat_{}".format(len(json_dict) - 5)][:-8]
             prev_ai2_item = json_dict["#chat_{}".format(len(json_dict) - 4)][3:-5]
 
-            ai2_item = random.choice(LUNCH_LIST[c])
-            LUNCH_LIST[c].remove(ai2_item)
-            ai1_item = random.choice(LUNCH_LIST[c])
-            LUNCH_LIST[c].remove(ai1_item)
+            ai2_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
+            LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai2_item]
+            ai1_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
+            LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai1_item]
 
             ai2_response1 = "{}はやめておこう。{}にしよう！".format(prev_ai2_item, ai2_item)
             ai1_response1 = "じゃあ{}はどう？".format(ai1_item)
@@ -109,7 +113,7 @@ def response_when_accepted(json_dict, category):
         _classes = ['talk_left2', 'talk_left1', 'talk_left1', 'talk_left2']
 
     denied_side1 = "えーっ！じゃ、じゃあ・・・"
-    denied_side2 = "{}なんてオススメだよ！".format(random.choice(LUNCH_LIST[category]))
+    denied_side2 = "{}なんてオススメだよ！".format(random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == category]["name"].tolist()))
     accepted_side2 = "もうええわー！"
     responces = [accepted_side1, denied_side1, denied_side2, accepted_side2]
     return responces, _classes
