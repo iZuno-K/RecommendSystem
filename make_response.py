@@ -5,11 +5,12 @@ import pathlib
 from np_detect import judge_np
 LUNCH_LIST = {}
 count = 0
+recommend_items = {}
 # TODO 複数人が接続しても大丈夫なようにする。 return_dictの中に入れて、web側で表示しないけど保持しておく？
 # TODO ファイル読み込み LUNCHI_LIST
 
 def make_response_two_ai(json_dict):
-    global count, LUNCH_LIST
+    global count, LUNCH_LIST, recommend_items
     count += 1
 
     l = len(list(json_dict.keys()))
@@ -33,6 +34,9 @@ def make_response_two_ai(json_dict):
         ai2_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
         LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai2_item]
 
+        recommend_items["ai1_recommend"] = [ai1_item]
+        recommend_items["ai2_recommend"] = [ai2_item]
+
         ai1_response1 = "{}にしたらどう？".format(ai1_item)
         ai2_response1 = "やっぱ{}でしょ！？".format(ai2_item)
         ai1_response2 = "また{}食べるとママに怒られるよ".format(ai2_item)
@@ -47,9 +51,10 @@ def make_response_two_ai(json_dict):
         c = find_category(human_choice_category)
         if c is None:
             return [], []
-        positive = judge_np(latest_human_response)
-        if positive:
-            responses, _classes = response_when_accepted(json_dict, c)
+        positive, accpeted_side = judge_which_is_accepted(latest_human_response)
+
+        if positive and accpeted_side != "both":
+            responses, _classes = response_when_accepted_side(accpeted_side, c)
         else:
             # ここで両方否定された場合はai2から喋る
             prev_ai1_item = json_dict["#chat_{}".format(len(json_dict) - 5)][:-8]
@@ -59,6 +64,9 @@ def make_response_two_ai(json_dict):
             LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai2_item]
             ai1_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
             LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai1_item]
+
+            recommend_items["ai1_recommend"].append(ai1_item)
+            recommend_items["ai2_recommend"].append(ai2_item)
 
             ai2_response1 = "{}はやめておこう。{}にしよう！".format(prev_ai2_item, ai2_item)
             ai1_response1 = "じゃあ{}はどう？".format(ai1_item)
@@ -73,16 +81,16 @@ def make_response_two_ai(json_dict):
         if c is None:
             return [], []
 
-        positive = judge_np(latest_human_response)
-        if positive:
-            responses, _classes = response_when_accepted(json_dict, c)
+        positive, accpeted_side = judge_which_is_accepted(latest_human_response)
+        if positive and accpeted_side != "both":
+            responses, _classes = response_when_accepted_side(accpeted_side, c)
         else:
             # ここまでで決まらなかったらギブアップ
             ai1_response1 = "力不足でござった..."
             ai2_response1 = "お手上げです..."
             responses = [ai1_response1, ai2_response1]
             _classes = ['talk_left1', 'talk_left2']
-
+    print(recommend_items)
     return responses, _classes
 
 
@@ -143,35 +151,39 @@ def recommend_item_detector(json_dict):
 
     return prev_ai1_items, prev_ai2_items
 
-def judge(human_response, json_dict):
+def judge_which_is_accepted(human_response):
     positive = False
     judged_side = "both"
-    ai_lunch = recommend_item_detector(json_dict)
-    for i in range(1, 1 + 2):
-        for l in ai_lunch[i]:
-            if l ==  human_response:
-                # 人間のレスポンスが料理名だけだった場合、それはその料理名を肯定したことになる
-                positive = _judge(l, human_response)
-                judged_side = str(i)
+    ai_lunch = recommend_items
+    keys = ["ai1_recommend", "ai2_recommend"]
+    for k in keys:
+        for l in ai_lunch[k]:
+            if (l == human_response) or (human_response in l):
+                # 人間のレスポンスが料理名もしくはその省略形だけだった場合、それはその料理名を肯定したことになる
+                positive = True
+                judged_side = k
                 return positive, judged_side
             elif l in human_response:
-                positive = _judge(l, human_response)
-                judged_side = str(i)
+                positive = judge_np(human_response)
+                judged_side = k
                 return positive, judged_side
             else:
-                positive = _judge(l, human_response)
+                positive = judge_np(human_response)
                 judged_side = "both"
     return positive, judged_side
 
 
-def _judge(lunch, human_response):
-    if lunch == human_response:
-        # 人間のレスポンスが料理名だけだった場合、それはその料理名を肯定したことになる
-        positive = True
-        return positive
-    elif lunch in human_response:
-        positive = judge_np(human_response)
-        return positive
+def response_when_accepted_side(side, category):
+    if side != "both":
+        key = side
+    accepted_side1 = "そうだね{}にしよう！".format(recommend_items[key][-1])  # 最後に提案したランチ
+    if side == "ai1_recommend":
+        _classes = ['talk_left1', 'talk_left2', 'talk_left2', 'talk_left1']
     else:
-        positive = judge_np(human_response)
-        return positive
+        _classes = ['talk_left2', 'talk_left1', 'talk_left1', 'talk_left2']
+
+    denied_side1 = "えーっ！じゃ、じゃあ・・・"
+    denied_side2 = "{}なんてオススメだよ！".format(random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == category]["name"].tolist()))
+    accepted_side2 = "もうええわー！"
+    responces = [accepted_side1, denied_side1, denied_side2, accepted_side2]
+    return responces, _classes

@@ -2,7 +2,7 @@ import base64
 import json
 import logging
 
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, session
 
 from six.moves import http_client
 
@@ -11,7 +11,7 @@ from flask import render_template
 from make_response import make_response_two_ai
 
 app = Flask(__name__)
-
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 def _base64_decode(encoded_str):
     # Add paddings manually if necessary.
@@ -44,17 +44,6 @@ def post_json():
 app.route('/hoge', methods=['POST'])
 
 
-def hoge():
-    message = request.get_json({'hoge', ''})
-    result = {
-        "data": {
-            "id": 1,
-            "name": message
-        }
-    }
-    return jsonify(result)
-
-
 @app.errorhandler(http_client.INTERNAL_SERVER_ERROR)
 def unexpected_error(e):
     """Handle exceptions by returning swagger-compliant json."""
@@ -75,34 +64,6 @@ def hello():
 def index():
     return render_template("index.html")
 
-
-@app.route("/fuga", methods=["post"])
-def post():
-    name = request.form["name"]
-    okyo = ["fwawa", "fsdaaw", "fuga", "hoge"]
-    return render_template("index.html", message=name)
-
-
-@app.route('/toPostURL', methods=['POST'])
-def get_user_info():
-    username = request.form['username'];
-    age = request.form['age'];
-    response = Response()
-    response.status_code = 200
-    return response
-
-
-# @app.route('/postText', methods=['POST'])
-# def lower_conversion():
-#    gobi = ["です", "ですわよ", "ですの"]
-#    text = request.json['text']
-#    if "ping" in text:
-#        return_data = {"result":"pong"}
-#        return jsonify(ResultSet=json.dumps(return_data))
-#    lower_text = text.lower()
-#    #return_data = {"result": "サーバーからのお返事：" + lower_text + random.choice(gobi)}
-#    return_data = {"result": "サーバーからのお返事：" + lower_text + "より id={} がお勧め".format(random.randint(1, 100) )+ random.choice(gobi)}
-#    return jsonify(ResultSet=json.dumps(return_data))
 
 @app.route('/postText', methods=['POST'])
 def respond_two_ai():
