@@ -31,7 +31,7 @@ function postMessages() {
         var textData = JSON.stringify({"talks": getTexts()});
         $.ajax({
             type: 'POST',
-            url: '/postText',
+            url: '/boring1post',
             data: textData,
             contentType: 'application/json',
             success: function (data) {

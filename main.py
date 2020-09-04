@@ -9,6 +9,7 @@ from six.moves import http_client
 from flask import render_template
 
 from make_response import make_response_two_ai
+from boring import make_response_boring1, make_response_boring2
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
@@ -60,18 +61,37 @@ def hello():
     return render_template("index.html")
 
 
-@app.route("/index")
+@app.route("/2ai")
 def index():
-    return render_template("index.html")
+    return render_template("2ai.html")
 
+@app.route("/boring1")
+def boring1():
+    return render_template("boring1.html")
+
+@app.route("/boring2")
+def boring2():
+    return render_template("boring2.html")
 
 @app.route('/postText', methods=['POST'])
 def respond_two_ai():
     json_dict = request.json['talks']
-
     responses, _classes = make_response_two_ai(json_dict)
     return_data = {"responses": responses, "_classes": _classes}
+    return jsonify(ResultSet=json.dumps(return_data))
 
+@app.route('/boring1post', methods=['POST'])
+def respond_boring_ai1():
+    json_dict = request.json['talks']
+    responses, _classes = make_response_boring1(json_dict)
+    return_data = {"responses": responses, "_classes": _classes}
+    return jsonify(ResultSet=json.dumps(return_data))
+
+@app.route('/boring2post', methods=['POST'])
+def respond_boring_ai2():
+    json_dict = request.json['talks']
+    responses, _classes = make_response_boring2(json_dict)
+    return_data = {"responses": responses, "_classes": _classes}
     return jsonify(ResultSet=json.dumps(return_data))
 
 

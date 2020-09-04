@@ -63,6 +63,7 @@ def make_response_two_ai(json_dict):
                 denied_side_new_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
                 recommend_items["ai1_recommend"].append(denied_side_new_item)
                 recommend_items["ai2_recommend"].append(non_denied_item)
+                _classes = ['talk_left1', 'talk_left2']
             else:
                 _classes = ['talk_left2', 'talk_left1']
                 denied_item = recommend_items["ai2_recommend"][-1]
@@ -70,12 +71,12 @@ def make_response_two_ai(json_dict):
                 denied_side_new_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
                 recommend_items["ai2_recommend"].append(denied_side_new_item)
                 recommend_items["ai1_recommend"].append(non_denied_item)
+                _classes = ['talk_left2', 'talk_left1']
 
             denied_side_response = "{}はやめておこう。{}にしよう！".format(denied_item, denied_side_new_item)
             non_denied_side_response = "じゃあ{}はどう？".format(non_denied_item)
 
             responses = [denied_side_response, non_denied_side_response]
-            _classes = ['talk_left2', 'talk_left1']
         else:
             # ここで両方否定された場合はai2から喋る
             prev_ai1_item = json_dict["#chat_{}".format(len(json_dict) - 5)][:-8]
