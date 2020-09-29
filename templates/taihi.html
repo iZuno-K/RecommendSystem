@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    function func() {
+      target = document.getElementById("output");
+      target.style.backgroundColor = "#ffe35f";
+      target.innerText = "ボタンがクリックされました。";
+   }
+   function func2() {
+      target = document.getElementById("output");
+      target.style.backgroundColor = "#ffe35f";
+      target.innerText = target.innerText + "asfaskdjosaithf lp;qa";
+   }
+
+    function delayExec() {
+      setTimeout('func();', 1500);
+      setTimeout('func2();', 3000);
+    }
+    window.onload = $("#button").click(function {delayExec(); return false;};)
+  </script>
+</head>
+<body>
+<!--  <input id="button", type="button" value="Click" onclick="delayExec();" />-->
+<input id="button", type="button" value="Click" />
+  <div id="output"></div>
+</body>
+</html>

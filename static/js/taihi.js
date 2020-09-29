@@ -9,14 +9,15 @@ if (window.addEventListener) {
 function wrapper(texts, _classes, i) {
     if (texts.length > i) {
         renderChat(texts[i], _classes[i]);
-        setTimeout(function () {wrapper(texts, _classes, i+1)}, 2000);
+        setTimeout(wrapper(texts, _classes, i+1), (i+1)*3000);
     }
+
 }
 
 function renderChat(text, _class) {
     var tmp = $(`<div class=${_class}/>`);
     var _id = "chat_" + String($('#msgDiv').children().length);
-    tmp.append($(`<p id=${_id}/>`).text(text))
+    tmp.append($(`<p id=${_id}/>`).text(text)).delay;
     tmp.appendTo($('#msgDiv'));
     $('#msgDiv')[0].scrollTop = $('#msgDiv')[0].scrollHeight;
 }
