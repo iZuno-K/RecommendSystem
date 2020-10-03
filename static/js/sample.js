@@ -9,7 +9,7 @@ if (window.addEventListener) {
 function wrapper(texts, _classes, i) {
     if (texts.length > i) {
         renderChat(texts[i], _classes[i]);
-        setTimeout(function () {wrapper(texts, _classes, i+1)}, 2000);
+        setTimeout(function () {wrapper(texts, _classes, i+1)}, 400 + Math.floor( Math.random() * 1400));
     }
 }
 
@@ -62,5 +62,5 @@ function draw(data) {
 //                for (var i = 0; i < responses.length; i++) {
 //                    setTimeout(renderChat(responses[i], _classes[i]), 3000);
 //                }
-    wrapper(responses, _classes, 0);
+    setTimeout(function () {wrapper(responses, _classes, 0)}, 400 + Math.floor( Math.random() * 1400));
 }
