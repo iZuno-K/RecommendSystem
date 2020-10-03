@@ -2,7 +2,7 @@ import random
 
 def make_response_boring1(json_dict):
     response = []
-    _class = ['talk_left1']
+    _class = ['talk_left3']
     lunch_list = ["カレー",
                   "おすし",
                   "からあげ",
@@ -43,7 +43,7 @@ def make_response_boring2(json_dict):
     l = len(list(json_dict.keys()))
     response = []
     _class = []
-    _class = ['talk_left1']
+    _class = ['talk_left3']
     if l == 1:
         response = ["好きな食べ物を5つ「、」で区切って教えてね。例えば「カレー、チャーハン」みたいにね。"]
     elif l == 3:
