@@ -6,10 +6,13 @@ if (window.addEventListener) {
     window.onload = postMessages;
 }
 
+var DELAY_MIN = 400;
+var DELAY_MAX = 1800;
+
 function wrapper(texts, _classes, i) {
     if (texts.length > i) {
         renderChat(texts[i], _classes[i]);
-        setTimeout(function () {wrapper(texts, _classes, i+1)}, 400 + Math.floor( Math.random() * 1400));
+        setTimeout(function () {wrapper(texts, _classes, i+1)}, DELAY_MIN + Math.floor( Math.random() * (DELAY_MAX - DELAY_MIN)));
     }
 }
 
@@ -62,5 +65,5 @@ function draw(data) {
 //                for (var i = 0; i < responses.length; i++) {
 //                    setTimeout(renderChat(responses[i], _classes[i]), 3000);
 //                }
-    setTimeout(function () {wrapper(responses, _classes, 0)}, 400 + Math.floor( Math.random() * 1400));
+    setTimeout(function () {wrapper(responses, _classes, 0)}, DELAY_MIN + Math.floor( Math.random() * (DELAY_MAX - DELAY_MIN)));
 }

@@ -144,16 +144,16 @@ def response_when_accepted(json_dict, category):
 
 def find_category(txt):
     c = None
-    categories = ["和食", "洋食", "中華", "和", "洋", "中"]
+    categories = ["和食", "洋食", "中華", "和", "洋", "中", "わしょく", "ようしょく", "ちゅうか"]
     for cat in categories:
         if cat in txt:
             c = cat
             break
-    if c == "和":
+    if c == "和" or c == "わしょく":
         c = "和食"
-    elif c == "洋":
+    elif c == "洋" or c == "ようしょく":
         c = "洋食"
-    elif c == "中":
+    elif c == "中" or c == "ちゅうか":
         c = "中華"
     return c
 
