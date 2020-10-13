@@ -9,6 +9,7 @@
 	background-color:rgb(113,147,193);
 }
 .text-center {
+    font-family: "sans-serif";
     /*以下装飾*/
     width: 100%;
     background: #00C778;
@@ -63,7 +64,7 @@
 	vertical-align:top;
 	border-radius:50%;
 	background-size:cover;
-	/*background-image:url(icon_left.jpg); !* ←アイコンはここを変更 *!*/
+	background-image:url(/static/images/taro.png); /*!* ←アイコンはここを変更 *!*/
 	background-color: blue;
 }
 
@@ -76,6 +77,7 @@
 	border-right:12px solid white;
 }
 .talks .talk_left1 p { /* 左ふきだしの本体 */
+	font-family: "sans-serif";
 	display:inline-block;
 	position:relative;
 	background-color:white;
@@ -96,7 +98,7 @@
 	vertical-align:top;
 	border-radius:50%;
 	background-size:cover;
-	/*background-image:url(icon_left.jpg); !* ←アイコンはここを変更 *!*/
+	background-image:url(/static/images/hanako.png); /*!* ←アイコンはここを変更 *!*/
 	background-color: red;
 }
 
@@ -110,6 +112,7 @@
 }
 
 .talks .talk_left2 p { /* 左ふきだしの本体 */
+	font-family: "sans-serif";
 	display:inline-block;
 	position:relative;
 	background-color:white;
@@ -130,7 +133,7 @@
 	vertical-align:top;
 	border-radius:50%;
 	background-size:cover;
-	/*background-image:url(icon_left.jpg); !* ←アイコンはここを変更 *!*/
+	background-image:url(/static/images/robot.png); /*!* ←アイコンはここを変更 *!*/
 	background-color: blue;
 }
 
@@ -143,6 +146,7 @@
 	border-right:12px solid white;
 }
 .talks .talk_left3 p { /* 左ふきだしの本体 */
+	font-family: "sans-serif";
 	display:inline-block;
 	position:relative;
 	background-color:white;
@@ -178,6 +182,7 @@
 	border-left:12px solid #85e249;
 }
 .talks .talk_right p { /* 右ふきだしの本体 */
+	font-family: "sans-serif";
 	display:inline-block;
 	position:relative;
 	background-color:#85e249;

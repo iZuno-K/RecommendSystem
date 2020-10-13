@@ -20,6 +20,7 @@ import pathlib
 def read_pn_di():
     dic_pn = {}
     with open('data/pn_ja.txt', 'r') as f:
+    # with open('data/pn_ja.txt', 'r', encoding="utf-8_sig") as f:
         lines = f.readlines()  # 1行を文字列として読み込む(改行文字も含まれる)
         for line in lines:
             # フォーマット
@@ -30,7 +31,8 @@ def read_pn_di():
 
 
 def judge_np(src_txt):
-    LUNCH_LIST = pd.read_csv(pathlib.Path(__file__).parent.joinpath("data/lunch_list.csv"), encoding='shift-jis')['name'].tolist()
+    LUNCH_LIST = pd.read_csv(pathlib.Path(__file__).parent.joinpath("data/lunch_list.csv"), encoding="shift-jis")['name'].tolist()
+    # LUNCH_LIST = pd.read_csv(pathlib.Path(__file__).parent.joinpath("data/lunch_list.csv"), encoding="utf-8_sig")['name'].tolist()
 
     # 単語感情極性対応表データを取得する
     dic_pn = read_pn_di()

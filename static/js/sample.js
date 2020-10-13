@@ -6,8 +6,8 @@ if (window.addEventListener) {
     window.onload = postMessages;
 }
 
-var DELAY_MIN = 400;
-var DELAY_MAX = 1800;
+var DELAY_MIN = 4000;
+var DELAY_MAX = 8000;
 
 function wrapper(texts, _classes, i) {
     if (texts.length > i) {
