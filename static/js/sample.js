@@ -9,6 +9,10 @@ if (window.addEventListener) {
 var DELAY_MIN = 4000;
 var DELAY_MAX = 8000;
 
+//var DELAY_MIN = 1000;
+//var DELAY_MAX = 1000;
+
+
 function wrapper(texts, _classes, i) {
     if (texts.length > i) {
         renderChat(texts[i], _classes[i]);

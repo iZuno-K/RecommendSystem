@@ -44,8 +44,11 @@ def make_response_two_ai(json_dict):
 
         responses = [ai1_response1, ai2_response1, ai1_response2, ai2_response2]
         _classes = ['talk_left1', 'talk_left2', 'talk_left1', 'talk_left2']
-    elif l == 8:
-        human_choice_category = json_dict["#chat_{}".format(len(json_dict) - 6)]
+    elif l == 8 or l == 11:
+        offset = 0
+        if l == 11:
+            offset = 3
+        human_choice_category = json_dict["#chat_{}".format(len(json_dict) - 6 - offset)]
         latest_human_response = json_dict["#chat_{}".format(len(json_dict) - 1)]
         # カテゴリ判定
         c = find_category(human_choice_category)
@@ -79,8 +82,10 @@ def make_response_two_ai(json_dict):
             responses = [denied_side_response, non_denied_side_response]
         else:
             # ここで両方否定された場合はai2から喋る
-            prev_ai1_item = json_dict["#chat_{}".format(len(json_dict) - 5)][:-8]
-            prev_ai2_item = json_dict["#chat_{}".format(len(json_dict) - 4)][3:-5]
+            # prev_ai1_item = json_dict["#chat_{}".format(len(json_dict) - 5)][:-8]
+            # prev_ai2_item = json_dict["#chat_{}".format(len(json_dict) - 4)][3:-5]
+            prev_ai1_item = recommend_items["ai1_recommend"][-1]
+            prev_ai2_item = recommend_items["ai2_recommend"][-1]
 
             ai2_item = random.choice(LUNCH_LIST[LUNCH_LIST["category1"] == c]["name"].tolist())
             LUNCH_LIST = LUNCH_LIST[LUNCH_LIST["name"] != ai2_item]
@@ -95,8 +100,8 @@ def make_response_two_ai(json_dict):
 
             responses = [ai2_response1, ai1_response1]
             _classes = ['talk_left2', 'talk_left1']
-    if l == 11:
-        human_choice_category = json_dict["#chat_{}".format(len(json_dict) - 9)]
+    if l == 14:
+        human_choice_category = json_dict["#chat_{}".format(len(json_dict) - 12)]
         latest_human_response = json_dict["#chat_{}".format(len(json_dict) - 1)]
         # カテゴリ判定
         c = find_category(human_choice_category)
