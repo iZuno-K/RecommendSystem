@@ -27,6 +27,8 @@ function getTexts() {
 function postMessages() {
     $("#button").click(function () {
         var _txt = $("#input-text").val();
+        $("#input-text").value = "";
+//        document.chat.reset();
         renderChat(_txt, 'talk_right');
         var textData = JSON.stringify({"talks": getTexts()});
         $.ajax({
@@ -40,6 +42,8 @@ function postMessages() {
                 for (var i = 0; i < responses.length; i++) {
                     renderChat(responses[i], _classes[i]);
                 }
+                var txt = document.getElementById('input-text');
+                txt.value = ""
             }
         });
         return false;

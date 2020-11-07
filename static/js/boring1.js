@@ -27,6 +27,7 @@ function getTexts() {
 function postMessages() {
     $("#button").click(function () {
         var _txt = $("#input-text").val();
+        $("#input-text").val("");
         renderChat(_txt, 'talk_right');
         var textData = JSON.stringify({"talks": getTexts()});
         $.ajax({
